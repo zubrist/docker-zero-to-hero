@@ -1,0 +1,16 @@
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# Compiled files
+*.class
+*.pyc
+__pycache__/
+
+# Docker
+.docker/
+
+# System files
+.DS_Store
+Thumbs.db
