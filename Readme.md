@@ -12,7 +12,7 @@ Containerization is like having your own personal bubble for your application - 
 
 ### 👴 The Old Way (Pre-Containerization)
 
-![Traditional Deployment](assets\before_containers.png)
+![Traditional Deployment](assets/before_containers.png)
 
 Back in the dark ages (like, 20 years ago), we had:
 
@@ -24,7 +24,7 @@ Back in the dark ages (like, 20 years ago), we had:
 
 ### ✨ The New Hotness (Containerized Architecture)
 
-![Containerized Architecture](assets\with_containers.png)
+![Containerized Architecture](assets/with_containers.png)
 
 Now we have:
 
@@ -74,7 +74,7 @@ Docker did for containers what the iPhone did for smartphones - it made the tech
 
 ## 🔧 How Docker Works: The Architecture
 
-![Docker Architecture](assets\docker_architecture.webp)
+![Docker Architecture](assets/docker_architecture.webp)
 
 ### 🎮 The Three Major Components of Docker
 
