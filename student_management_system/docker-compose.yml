@@ -1,0 +1,70 @@
+
+services:
+  gateway:
+    image: student-mgmt/gateway:latest
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 8001
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    env_file:
+      - ./gateway/.env
+    environment:
+      TZ: Asia/Kolkata
+      PYTHONPATH: /app
+      STUDENTS_SERVICE_URL: http://students:8000
+    ports:
+      - 8001:8001
+    depends_on:
+      - students
+    volumes:
+      - ./gateway:/app
+    networks:
+      - app_network
+
+  students:
+    image: student-mgmt/students:latest
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    build:
+      context: ./students
+      dockerfile: Dockerfile
+    env_file:
+      - ./students/.env
+    environment:
+      TZ: Asia/Kolkata
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: qwertyuiop_09
+      DB_NAME: student_management
+    volumes:
+      - ./students:/app
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - app_network
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      TZ: Asia/Kolkata
+      MYSQL_ROOT_PASSWORD: qwertyuiop_09
+      MYSQL_DATABASE: student_management
+    ports:
+      - "3307:3306"  # Changed to 3307 to avoid conflicts
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_network
+
+volumes:
+  mysql_data:
+
+networks:
+  app_network:
+    driver: bridge

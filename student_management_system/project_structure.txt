@@ -1,0 +1,23 @@
+student_management_system/
+├── gateway/                    # API Gateway Service
+│   ├── main.py                # Main FastAPI application
+│   ├── core.py                # Core routing functionality
+│   ├── auth.py                # Authentication/Authorization
+│   ├── datastructures/        # Pydantic models for request/response
+│   │   └── students.py
+│   └── requirements.txt
+│
+├── students/                   # Student Service
+│   ├── main.py                # Main FastAPI application
+│   ├── db/
+│   │   ├── models/
+│   │   │   ├── students.py    # Student Pydantic & DB models
+│   │   │   └── documents.py   # Document management models
+│   ├── routers/
+│   │   ├── students.py        # Student routes
+│   │   └── documents.py       # Document routes
+│   ├── init_db.py             # Database initialization
+│   └── requirements.txt
+│
+├── docker-compose.yml         # Docker composition
+└── README.md

@@ -1,0 +1,5 @@
+com/example/SB_Mongo/Application.class
+com/example/SB_Mongo/TaskController.class
+com/example/SB_Mongo/Task.class
+com/example/SB_Mongo/HelloController.class
+com/example/SB_Mongo/TaskRepository.class
