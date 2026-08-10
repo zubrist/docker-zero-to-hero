@@ -102,6 +102,8 @@ The Docker Host is where all the heavy lifting happens - it's the workhorse that
   - **Docker Daemon (dockerd)**: The persistent background process that manages everything
   - **Container Runtime**: The low-level component that actually runs the containers
   - **Storage & Networking**: Manages how containers store data and communicate
+  - **Namespaces**: Linux kernel features that give each container its own isolated view of processes, networking, mounts, users, and more
+  - **cgroups**: Linux control groups that limit and track how much CPU, memory, disk I/O, and other resources a container can use
 
 - **What it does**:
   - Builds and stores images
@@ -112,6 +114,18 @@ The Docker Host is where all the heavy lifting happens - it's the workhorse that
 - **How it works**: The daemon listens for API requests from the Docker Client and processes them, handling all the complex tasks of container management
 
 - **Cool fact**: The Docker daemon uses containerd and runc under the hood - these are the actual container runtime components that implement the Open Container Initiative (OCI) standards
+
+#### Why Namespaces and cgroups Matter
+
+These two Linux features are the real reason containers feel separate even though they share the same host operating system.
+
+- **Namespaces provide isolation**: They make a container see its own processes, filesystems, hostnames, and network interfaces instead of the whole machine
+- **cgroups provide control**: They prevent one container from consuming all the CPU or memory and slowing everything else down
+- **Together they create containers**: Namespaces make the environment look private, while cgroups keep resource usage under control
+
+Easy example: if your laptop is a shared apartment, namespaces are the separate rooms and cgroups are the utility limits for each room.
+
+Harder example: a database container can be isolated from the rest of the system with its own process tree and network stack, while cgroups cap it at, say, 1 CPU core and 1 GB of RAM so it cannot overwhelm the host.
 
 #### 3️⃣ Docker Registry: The Container Store
 
@@ -173,7 +187,7 @@ docker pull python:3.9-alpine
 Containers are like lightweight VMs that run your application in isolation. They're the living, breathing instances of your images - where the magic actually happens!
 
 - **What they are**: Runnable instances of images with their own isolated filesystem, networking, and process space
-- **How they work**: They're isolated but share the host OS kernel (unlike VMs which have their own OS)
+- **How they work**: They're isolated but share the host OS kernel (unlike VMs which have their own OS). That isolation is mainly created by Linux namespaces, while cgroups enforce resource limits
 - **Lifecycle**: Create → Start → Stop → Restart → Delete
 - **State**: Containers have state - files can be created, modified, and deleted inside them
 
